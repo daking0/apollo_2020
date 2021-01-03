@@ -13,11 +13,7 @@ const GET_MOVIE = gql`
       rating
       description_full
     }
-    suggestions(id: $id){
-        id
-        title
-        medium_cover_image
-    }
+
   }
 `;
 
@@ -62,16 +58,16 @@ const Poster = styled.div`
 export default () => {
   const { id } = useParams();
   const { loading, data } = useQuery(GET_MOVIE, {
-    variables: { id : +id }
+    variables: { id :  parseInt(id) }
   });
 
+  console.log( { id }, {data})
   return (
     <Container>
       <Column>
         <Title>{loading ? "Loading..." : data.movie.title}</Title>
             <Subtitle>{data?.movie?.language} ' {data?.movie?.rating} </Subtitle>
             <Description>{data?.movie?.description_full} </Description>
-        )}
       </Column>
       <Poster bg={data && data.movie ? data.movie.medium_cover_image : ""}></Poster>
       <Poster bg={data?.movie?.medium_cover_image}></Poster>
